@@ -1,9 +1,20 @@
-// import express app
+// import package
+// express
 const express = require('express');
+// body-parser
+const bodyParser = require('body-parser');
+// mongoose
+const mongoose = require('mongoose');
+
+
+// import routes
+const routes = require('./routes/index');
+// import config
+const config = require('./config/config.json');
+
+
 // create express application
 const app = express();
-// import body-parser app
-const bodyParser = require('body-parser');
 
 // create a middleware to get bodyparser json object
 app.use(bodyParser.json()); //request.body
@@ -20,59 +31,15 @@ app.use((request, response, next) => {
 // set root route
 app.get('/', (request, response) => {
     // send message hello world
-    return response.send('Hello World');
+    return response.send('Welcome to MEAN stack app');
 });
 
-// create jobs
-// each object will have id, title, description, and duration
-const jobs = [{
-        id: 1,
-        title: 'Node.js Developer',
-        description: 'He is the one who want to be a greatest mind',
-        duration: '3 months'
-    },
-    {
-        id: 2,
-        title: 'Vue.js Developer',
-        description: 'He is the one who want to be a greatest mind',
-        duration: '2 months'
-    }
-];
+app.use('/api', routes);
 
-
-// create jobs endpoint
-app.get('/jobs', (request, response) => {
-    // return the jobs
-    return response.json(jobs);
+// connect the app to mongoose
+mongoose.connect(config.MONGO_URI, () => {
+    console.log('Your App is connected to mongo db')
 });
-
-// Create POST  route /jobs
-app.post('/jobs', (request, response) => {
-    //get the id from the request body
-    let id = request.body.id;
-    //get the title from the request body
-    let title = request.body.title;
-    //get the duration from the request body
-    let duration = request.body.duration;
-    //get the description from the request body
-    let description = request.body.description;
-
-    //create new job object
-    let job = {
-        id,
-        title,
-        duration,
-        description
-    };
-
-    //add the job object to jobs array
-    jobs.push(job);
-
-    //return the job array to server
-    return response.json(jobs);
-
-});
-
 //listen the express app to port 3000
 app.listen('3000', () => {
     console.log('Application is running port 3000')
