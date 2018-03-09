@@ -38,7 +38,10 @@ app.use('/api', routes);
 
 // connect the app to mongoose
 mongoose.connect(config.MONGO_URI, () => {
+
     console.log('Your App is connected to mongo db')
+}).catch(function() {
+    console.log("Not Connected to Database ERROR!");
 });
 //listen the express app to port 3000
 app.listen('3000', () => {
