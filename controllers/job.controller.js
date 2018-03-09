@@ -68,5 +68,45 @@ module.exports = {
             // return all the jobs to the server with 200 status
             return response.status(200).json(job);
         });
+    },
+    update(request, response) {
+        // get id from req params
+        let id = request.params.id;
+        // get title from req params
+        let title = request.body.title;
+        // get description from req params
+        let description = request.body.description;
+        // get duration from req params
+        let duration = request.body.duration;
+
+        // create jobAttributes objects
+        let jobAttributes = {};
+
+        // if user wants to update the title
+        // then add title to jobAttributes
+        if (title) {
+            jobAttributes.title = title;
+        }
+        // if user wants to update the description
+        // then add description to jobAttributes
+        if (description) {
+            jobAttributes.description = description;
+        }
+        // if user wants to update the duration
+        // then add duration to jobAttributes
+        if (duration) {
+            jobAttributes.duration = duration;
+        }
+        // call the update method to edit the job
+        // pass the three arguments: id, jobAttributes, callback
+        Job.update({ id: id }, jobAttributes, (err, result) => {
+            // if error comes send the 500 status with error
+            if (err) {
+                return response.status(500).send(err)
+            }
+            // if everything is good send the msg the job is
+            // updated successfully
+            return response.status(200).json({ msg: `Job is Updated with id ${id}` });
+        });
     }
 };

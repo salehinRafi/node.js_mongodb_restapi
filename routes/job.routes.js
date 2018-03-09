@@ -8,4 +8,6 @@ router.post('/', JobController.create);
 // find specific job id
 router.get('/:id', JobController.findOne);
 
+// update the job id
+router.put('/:id', JobController.update);
 module.exports = router;
