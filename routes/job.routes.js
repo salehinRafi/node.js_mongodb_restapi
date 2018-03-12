@@ -5,9 +5,13 @@ const JobController = require('../controllers/job.controller');
 router.get('/', JobController.findAll); //api/jobs/ GET
 router.post('/', JobController.create);
 
-// find specific job id
+// GET: find specific job id
 router.get('/:id', JobController.findOne);
 
-// update the job id
+// PUT: update the job id
 router.put('/:id', JobController.update);
+
+// DELETE: delete the job id
+router.delete('/:id', JobController.delete);
+
 module.exports = router;

@@ -99,7 +99,7 @@ module.exports = {
         }
         // call the update method to edit the job
         // pass the three arguments: id, jobAttributes, callback
-        Job.update({ id: id }, jobAttributes, (err, result) => {
+        Job.update({ _id: id }, jobAttributes, (err, result) => {
             // if error comes send the 500 status with error
             if (err) {
                 return response.status(500).send(err)
@@ -107,6 +107,21 @@ module.exports = {
             // if everything is good send the msg the job is
             // updated successfully
             return response.status(200).json({ msg: `Job is Updated with id ${id}` });
+        });
+    },
+    delete(request, response) {
+
+        // get the id from request params
+        let id = request.params.id;
+        // call findByIdAndRemove method
+        Job.findByIdAndRemove(id, err => {
+
+            // if error comes then send 500 status with error
+            if (err) {
+                return response.status(500).send(err)
+            }
+            // if everything is good, send the msg job has deleted
+            return response.status(200).json({ msg: `Job is Deleted with id ${id}` });
         });
     }
 };
