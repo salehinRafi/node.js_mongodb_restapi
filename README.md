@@ -1,7 +1,5 @@
 # NodeJs: Building REST APIs From Scratch
 
-This is the source code that I produce when I take a cource on Udemy Online Course.
-
 ### Prerequisites
 
 Below is the stack and tools that I use in this development process.
